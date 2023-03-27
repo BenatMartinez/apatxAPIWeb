@@ -18,7 +18,11 @@ const UserSchema = new Schema<User>(
     },
     description: {
       type: String,
-      default: "Soy la descripcion",
+      default: "",
+    },
+    activo: {
+        type: Number,
+        default: 1,
     },
   },
   {
