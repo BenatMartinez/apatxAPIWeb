@@ -34,4 +34,14 @@ const loginUser = async ({ email, password }: Auth) => {
   return data;
 };
 
-export { registerNewUser, loginUser };
+const getUsers = async()=>{
+    const users = await UserModel.find();
+    const numusers = await UserModel.count();
+    const data = {
+        numUsers: numusers,
+        users: users,
+    };
+    return data;
+};
+
+export { registerNewUser, loginUser, getUsers };

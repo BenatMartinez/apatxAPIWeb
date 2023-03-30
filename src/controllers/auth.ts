@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { registerNewUser, loginUser } from "../services/auth";
+import { registerNewUser, loginUser, getUsers } from "../services/auth";
 import { handleHttp } from "../utils/error.handle";
 
 const registerCtrl = async ({ body }: Request, res: Response) => {
@@ -15,7 +15,7 @@ const loginCtrl = async ({ body }: Request, res: Response) => {
   
   try {
     const { email, password } = body;
-  const responseUser = await loginUser({ email, password });
+    const responseUser = await loginUser({ email, password });
 
   if (responseUser === "PASSWORD_INCORRECT") {
     res.status(403);
@@ -28,12 +28,15 @@ const loginCtrl = async ({ body }: Request, res: Response) => {
   }
 };
 
-const console = async (req:Request, res:Response)=>{
-    try{
-        res.send("Hello World")
-    } catch (e) {
-        handleHttp(res, "ERROR HELLO");
+const getAccounts = async (req:Request, res: Response)=>{
+
+    try {
+        const respUsers = await getUsers();
+        res.send(respUsers);
+
+      } catch (e) {
+        handleHttp(res, "ERROR_GET_ACCOUNTS");
       }
 }
 
-export { loginCtrl, registerCtrl, console };
+export { loginCtrl, registerCtrl, getAccounts };
